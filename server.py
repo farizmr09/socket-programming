@@ -10,7 +10,7 @@ s.bind(('', port)) #Dikosongin == localhost == 127.0.0.1
 print ("socket binded to %s" %(port))
  
 
-s.listen(100) #Maksimal client yang connect 5   
+s.listen(100) #Maks client di queue   
 print ("socket is listening")           
 
 def broadcast(msg, c):
@@ -36,7 +36,6 @@ while True:
   c, addr = s.accept()    
   clients.append(c)
   threading._start_new_thread(multi_thread, (c, addr, ))
-  if len(clients) == 0:
-    s.close()
+
 
    

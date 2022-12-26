@@ -3,7 +3,8 @@ import threading
 
 def listen_msg(s):
     while True:
-        print(s.recv(1024).decode())
+        msg = s.recv(1024).decode()
+        print(msg)
         global stop
         if stop == True: 
             break
@@ -11,17 +12,20 @@ def listen_msg(s):
  
 s = socket.socket()        
  
-port = 1234         
- 
-s.connect(('127.0.0.1', port))
+port = 3000
+uname = input("Enter your Username: ") 
+
+s.connect(('', port))
  
 threading._start_new_thread(listen_msg, (s, ))
 
 while True:
     stop = False
     msg = input()
-    s.send(msg.encode())
-    if msg == "exit":
+    reformatted = uname + " : " + msg
+    s.send(reformatted.encode())
+    # s.send(msg.encode())
+    if "/exit" in msg:
         stop = True
         s.close()
         break
